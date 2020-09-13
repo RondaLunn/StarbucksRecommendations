@@ -66,9 +66,27 @@ Counts for each event type for each user.
 Shows counts of each offer type by user and event type
 * Group event_detail_df by person, event, and offer_type, get the count of offer_type, and unstack with null values set to 0.
 
+## Make Recommendations
+find_similar_users - Takes in a user and finds other users with similar demographic information.
+* Get the user from the profile dataset
+* Get the user's age, gender, and income
+* Filter the dataframe by user's gender and specified age and income ranges. 
+* Return ids of the similar users. 
 
+create_user_group - Takes in demographic information and outputs a list of users meeting those demographic specifications.
+* Filter the dataframe by the specified age range, gender(s), and income range. 
+* Return array of ids for users meeting the specifications.
+
+recommend_group_offers - Sorts the offer types by how well a given group responds to the offer.
+* For each user in the group, get the information from the user_matrix and the user_count dataframes.
+* Get completed offers and viewed offers for the user for each offer type. Set to 0 if none exist. 
+* Calculate weighted value of each offer type by 1 minus the absolute value of the difference between completed offers and viewed offers divided by the received offers. 
+* Add each weight to the total weight for the offer type. 
+* Sort the offer types by weight
+* Return the sorted array and a dictionary of the offers and their weights. 
 
 ## Evaluate Results
+check_recommendation_accuracy - Checks the accuracy of the recommendations by checking the group prediction against each user.
 Calculate the root mean squared error to check accuracy of recommendations
 * Create a dictionary to map each offer type to a number.
 * Create a prediction array mapping each offer type in the recommendation array to the dictionary. 
